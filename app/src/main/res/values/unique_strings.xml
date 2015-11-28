@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- OpenWeatherMap appID-->
+    <string name="open_weather_api_key">57cca4e37a0cb87859364ffca5cdc1fc</string>
+    <!-- google map api key-->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBznnP-vM3ZAHHooO45rlSBpnTd7_K3VFA</string>
+    <!-- EndPoints-->
+    <string name="base_url">http://api.openweathermap.org</string>
+    <string name="image_endpoint">http://api.openweathermap.org/img/w/%s.png</string>
+    <!-- Fragment tags-->
+    <string name="tag_map_fragment">tag_map_fragment</string>
+</resources>

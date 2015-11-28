@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">WeatherApp</string>
+    <string name="title_activity_maps">WeatherApp</string>
+    <string name="msg_no_google_services">Haven\'t Google Services</string>
+    <string name="msg_have_google_service">You have Google Services</string>
+    <string name="msg_connection_suspended">Connection suspended. Try to connect</string>
+    <string name="msg_connection_failed">Connection failed. Code %d</string>
+    <string name="msg_turn_on_geolocation">Turn on Geolocation</string>
+    <string name="msg_click_on_me">Click on me</string>
+    <string name="msg_could_not_load_data">Could not load data. Check connection</string>
+    <string name="action_ok">Ok</string>
+
+    <!-- Weather fragment label strings-->
+    <string name="lbl_city_name">City: %s</string>
+    <string name="lbl_temp">Temp: %.2f C</string>
+    <string name="lbl_desc">Desc: %s</string>
+    <string name="lbl_city_id">ID: %d</string>
+    <string name="lbl_pressure">Pressure:  %.2f hPa</string>
+    <string name="lbl_humidity">Humidity: %d </string>
+    <string name="lbl_wind_speed">Wind speed:  %.2f meter/s</string>
+    <string name="lbl_wind_deg">Wind deg:  %.2f</string>
+    <string name="lbl_max_temp">Max temp:  %.2f C</string>
+    <string name="lbl_min_temp">Min temp:  %.2f C</string>
+    <string name="lbl_sea_level">Sea lvl:  %.2f hPa</string>
+    <string name="lbl_grnd_level">Ground lvl:  %.2f hPa</string>
+    <string name="lbl_clods">Clouds: %d </string>
+    <string name="lbl_rain">Rain:  %.2f</string>
+    <string name="lbl_snow">Snow:  %.2f</string>
+    <string name="lbl_time">Calc time %s</string>
+    <string name="lbl_country_code">Country: %s</string>
+    <string name="lbl_sunrise_time">Sunrise: %s</string>
+    <string name="lbl_sunset_time">Sunset: %s</string>
+    <string name="lbl_latitude">Latitude:  %.2f</string>
+    <string name="lbl_longitude">Longitude:  %.2f</string>
+
+</resources>
