@@ -4,7 +4,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.garrytrue.weatherapp.app.WeatherApplication;
+import com.garrytrue.weatherapp.weather_app.WeatherApplication;
 import com.garrytrue.weatherapp.mvp.views.IMapFragmentView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -20,12 +20,13 @@ public class MapFragmentPresenter implements IMapFragmentPresenter, GoogleApiCli
     private static final String TAG = MapFragmentPresenter.class.getSimpleName();
     private IMapFragmentView view;
     private GoogleApiClient mLocationClient;
+    @Inject
     LocationRequest mLocationRequest;
-
 
     @Inject
     public MapFragmentPresenter() {
     }
+
 
     @Override
     public void init(IMapFragmentView view) {
@@ -65,7 +66,6 @@ public class MapFragmentPresenter implements IMapFragmentPresenter, GoogleApiCli
         } else {
             Log.d(TAG, "onConnected: Location is NULL");
             view.showNotLocationMsg();
-            createLocationRequest();
             LocationServices.FusedLocationApi.requestLocationUpdates(mLocationClient,
                     mLocationRequest, this);
         }
@@ -92,13 +92,6 @@ public class MapFragmentPresenter implements IMapFragmentPresenter, GoogleApiCli
     }
 
     //LocationCallback
-    protected void createLocationRequest() {
-        mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(10000);
-        mLocationRequest.setFastestInterval(5000);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-    }
-
     @Override
     public void onLocationChanged(Location location) {
         Log.d(TAG, "onLocationChanged: " + location.toString());

@@ -4,13 +4,12 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import com.garrytrue.weatherapp.R;
-import com.garrytrue.weatherapp.app.WeatherApplication;
+import com.garrytrue.weatherapp.weather_app.WeatherApplication;
 import com.garrytrue.weatherapp.di.component.DaggerMainActivityComponent;
 import com.garrytrue.weatherapp.di.component.MainActivityComponent;
 import com.garrytrue.weatherapp.di.module.MainActivityModule;
@@ -47,14 +46,15 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         mainActivityComponent.inject(this);
 
     }
-    private void setupFragments(Bundle savedState){
-        if(isPalyServiceAvailable()){
+
+    private void setupFragments(Bundle savedState) {
+        if (isPalyServiceAvailable()) {
             Fragment mapFragment = fragmentManager.findFragmentByTag(getString(R.string
                     .tag_map_fragment));
-            if(mapFragment == null){
+            if (mapFragment == null) {
                 mapFragment = MapFragment.newInstance();
             }
-            if(savedState == null ){
+            if (savedState == null) {
                 fragmentManager.beginTransaction()
                         .replace(R.id.fl_root, mapFragment, getString(R.string.tag_map_fragment))
                         .commit();
@@ -84,11 +84,6 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     @Override
     public void popFragmentFromBackStack() {
         fragmentManager.popBackStack();
-    }
-
-    @Override
-    public void showConnectionError() {
-// TODO: 24.11.15  Need implement connection listener and show error
     }
 
     @Override

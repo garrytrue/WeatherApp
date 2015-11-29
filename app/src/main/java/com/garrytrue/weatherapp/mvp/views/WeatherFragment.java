@@ -12,10 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.garrytrue.weatherapp.R;
-import com.garrytrue.weatherapp.app.WeatherApplication;
-import com.garrytrue.weatherapp.di.component.DaggerNetworkComponent;
-import com.garrytrue.weatherapp.di.component.NetworkComponent;
-import com.garrytrue.weatherapp.di.module.NetworkModule;
+import com.garrytrue.weatherapp.weather_app.WeatherApplication;
 import com.garrytrue.weatherapp.mvp.model.WeatherModel;
 import com.garrytrue.weatherapp.mvp.presenters.WeatherFragmentPresenter;
 import com.squareup.picasso.Picasso;
@@ -33,11 +30,9 @@ public class WeatherFragment extends Fragment implements IWeatherFragmentView {
     private double latitude = -1;
     private ImageView weatherImage;
     private View commonInfo, fullInfo, progressBar;
-    private TextView cityName, temperature, desc, windSpeed, windDeg,tempMax, tempMin, seaLvl,
+    private TextView cityName, temperature, desc, windSpeed, windDeg, tempMax, tempMin, seaLvl,
             grndLvl, clouds, rain, show, cityId, pressure, humidity, calcTime, sunsetTime,
             sunriseTime, country, tvLat, tvLon;
-
-    NetworkComponent networkComponent;
 
     @Inject
     WeatherFragmentPresenter presenter;
@@ -59,18 +54,19 @@ public class WeatherFragment extends Fragment implements IWeatherFragmentView {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        networkComponent = WeatherApplication.getApplication(getActivity()).getNetworkComponent();
         initArguments();
         initUI(view);
     }
-    private  void initArguments(){
-        if(getArguments() != null){
+
+    private void initArguments() {
+        if (getArguments() != null) {
             double[] array = getArguments().getDoubleArray(BUNDLE_KEY_LOCATION);
             latitude = array[0];
             longitude = array[1];
         }
     }
-    private void initUI(View v){
+
+    private void initUI(View v) {
         weatherImage = (ImageView) v.findViewById(R.id.im_weather_icon);
         commonInfo = v.findViewById(R.id.ll_common_info);
         fullInfo = v.findViewById(R.id.ll_full_info);
@@ -103,8 +99,8 @@ public class WeatherFragment extends Fragment implements IWeatherFragmentView {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ((MainActivity) getActivity()).getMainActivityComponent().inject(this);
+        WeatherApplication.getApplication(getActivity()).getNetworkComponent().inject(presenter);
         presenter.init(this);
-        networkComponent.inject(presenter);
     }
 
     @Override
@@ -113,7 +109,7 @@ public class WeatherFragment extends Fragment implements IWeatherFragmentView {
         presenter.startLoadData(latitude, longitude, getString(R.string.open_weather_api_key));
     }
 
-// IWeatherFragmentView method implementation
+    // IWeatherFragmentView method implementation
     @Override
     public void updateView(WeatherModel data) {
         Log.d(TAG, "updateView: IconEndPoint " + String.format(getString(R.string.image_endpoint), data.getWeather().get(0).getIcon()));
@@ -131,14 +127,14 @@ public class WeatherFragment extends Fragment implements IWeatherFragmentView {
         seaLvl.setText(String.format(getString(R.string.lbl_sea_level), data.getMain().getSeaLevel()));
         grndLvl.setText(String.format(getString(R.string.lbl_grnd_level), data.getMain().getGrndLevel()));
         clouds.setText(String.format(getString(R.string.lbl_clods), data.getClouds().getAll()));
-        if(data.getSnow() == null){
+        if (data.getSnow() == null) {
             show.setVisibility(View.GONE);
-        }else {
+        } else {
             show.setText(String.format(getString(R.string.lbl_snow), data.getSnow().get3h()));
         }
-        if(data.getRain() == null){
+        if (data.getRain() == null) {
             rain.setVisibility(View.GONE);
-        }else {
+        } else {
             rain.setText(String.format(getString(R.string.lbl_rain), data.getRain().get3h()));
         }
         cityId.setText(String.format(getString(R.string.lbl_city_id), data.getId()));
@@ -175,14 +171,15 @@ public class WeatherFragment extends Fragment implements IWeatherFragmentView {
 
     }
 
-    private void showInfoViews(boolean needShow){
+    private void showInfoViews(boolean needShow) {
         commonInfo.setVisibility(needShow ? View.VISIBLE : View.GONE);
         fullInfo.setVisibility(needShow ? View.VISIBLE : View.GONE);
         weatherImage.setVisibility(needShow ? View.VISIBLE : View.GONE);
         progressBar.setVisibility(!needShow ? View.VISIBLE : View.GONE);
     }
-    private String dateTimeConverter(long timestamp){
-        long dv = Long.valueOf(timestamp)*1000;// its need to be in milisecond
+
+    private String dateTimeConverter(long timestamp) {
+        long dv = Long.valueOf(timestamp) * 1000;// its need to be in milisecond
         Date df = new java.util.Date(dv);
         return new SimpleDateFormat("MMM dd, yy HH:mm", Locale.getDefault()).format(df);
     }

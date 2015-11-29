@@ -1,6 +1,6 @@
 package com.garrytrue.weatherapp.di.module;
 
-import com.garrytrue.weatherapp.app.WeatherApplication;
+import com.garrytrue.weatherapp.weather_app.WeatherApplication;
 
 import javax.inject.Singleton;
 

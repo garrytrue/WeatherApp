@@ -5,6 +5,7 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 
 import com.garrytrue.weatherapp.R;
+import com.garrytrue.weatherapp.weather_app.WeatherApplication;
 import com.garrytrue.weatherapp.mvp.presenters.MapFragmentPresenter;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -22,6 +23,7 @@ import javax.inject.Inject;
  */
 public class MapFragment extends SupportMapFragment implements OnMapReadyCallback, IMapFragmentView {
     private static final String TAG = "MapFragment";
+    public static final int MAP_ZOOM = 10;
     private GoogleMap mMap;
     private LatLng mLocation;
     private View rootView;
@@ -52,6 +54,7 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ((MainActivity) getActivity()).getMainActivityComponent().inject(this);
+        WeatherApplication.getApplication(getActivity()).getLocationRequestComponent().inject(presenter);
         presenter.onActivityCreated();
         presenter.init(this);
     }
@@ -83,17 +86,6 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
     }
 
     @Override
-    public void showProgress() {
-
-    }
-
-    @Override
-    public void hideProgress() {
-
-    }
-
-
-    @Override
     public void showConnectionSuspendedError() {
 
     }
@@ -106,8 +98,8 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
     @Override
     public void showLocation(LatLng location) {
         mLocation = location;
-        mMap.addMarker(new MarkerOptions().position(location).title(getString(R.string.msg_click_on_me)));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 10));
+        mMap.addMarker(new MarkerOptions().position(location));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, MAP_ZOOM));
     }
 
     @Override

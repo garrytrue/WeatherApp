@@ -18,11 +18,6 @@ public class MainActivityPresenter implements IMainActivityPresenter {
     }
 
     @Override
-    public void hadConnectionError() {
-        mainView.showConnectionError();
-    }
-
-    @Override
     public void hadGoogleServiceError() {
         mainView.showGoogleServiceError();
     }
