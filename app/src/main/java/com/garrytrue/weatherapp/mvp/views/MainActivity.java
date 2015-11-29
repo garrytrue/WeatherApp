@@ -9,11 +9,11 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.garrytrue.weatherapp.R;
-import com.garrytrue.weatherapp.weather_app.WeatherApplication;
 import com.garrytrue.weatherapp.di.component.DaggerMainActivityComponent;
 import com.garrytrue.weatherapp.di.component.MainActivityComponent;
 import com.garrytrue.weatherapp.di.module.MainActivityModule;
 import com.garrytrue.weatherapp.mvp.presenters.MainActivityPresenter;
+import com.garrytrue.weatherapp.weather_app.WeatherApplication;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     MainActivityPresenter presenter;
     FragmentManager fragmentManager;
     MainActivityComponent mainActivityComponent;
+
     private FrameLayout frameLayoutRoot;
 
 
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     }
 
     private void setupFragments(Bundle savedState) {
-        if (isPalyServiceAvailable()) {
+        if (isPlayServiceAvailable()) {
             Fragment mapFragment = fragmentManager.findFragmentByTag(getString(R.string
                     .tag_map_fragment));
             if (mapFragment == null) {
@@ -62,22 +63,22 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         }
     }
 
-    private boolean isPalyServiceAvailable() {
+    private boolean isPlayServiceAvailable() {
         int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-        if (resultCode != ConnectionResult.SUCCESS) {
-            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-                GooglePlayServicesUtil.getErrorDialog(resultCode, this, PLAY_SERVICES_RESOLUTION_REQUEST).show();
-            }
-            return false;
+        if (resultCode == ConnectionResult.SUCCESS) {
+            return true;
         }
-        return true;
+        if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+            GooglePlayServicesUtil.getErrorDialog(resultCode, this, PLAY_SERVICES_RESOLUTION_REQUEST).show();
+        }
+        return false;
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (!isPalyServiceAvailable()) {
-            presenter.hadGoogleServiceError();
+        if (!isPlayServiceAvailable()) {
+            presenter.haveGoogleServiceError();
         }
     }
 
@@ -99,10 +100,11 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 
     @Override
     public void onBackPressed() {
-        if (fragmentManager.getBackStackEntryCount() > 0)
+        if (fragmentManager.getBackStackEntryCount() > 0) {
             presenter.onPresenterBackPressed();
-        else
+        } else {
             super.onBackPressed();
+        }
     }
 
     private View.OnClickListener snackBarActionOkListener = new View.OnClickListener() {

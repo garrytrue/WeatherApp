@@ -18,7 +18,6 @@ import retrofit.Retrofit;
 
 public class WeatherFragmentPresenter implements IWeatherFragmentPresenter {
     private static final String TAG = WeatherFragmentPresenter.class.getSimpleName();
-    public static final int NETWORK_CODE_OK = 200;
     private IWeatherFragmentView view;
     @Inject
     protected Retrofit retrofit;
@@ -32,11 +31,6 @@ public class WeatherFragmentPresenter implements IWeatherFragmentPresenter {
         this.view = view;
     }
 
-    /**
-     * @param latitude
-     * @param longitude
-     * @param appId
-     */
     @Override
     public void startLoadData(double latitude, double longitude, String appId) {
         view.showProgress();
@@ -59,7 +53,7 @@ public class WeatherFragmentPresenter implements IWeatherFragmentPresenter {
             Log.d(TAG, "onResponse: " + response.code() + " " + response.errorBody() + " " +
                     "" + response.body());
             view.hideProgress();
-            if (response.code() == NETWORK_CODE_OK) {
+            if (response.isSuccess()) {
                 WeatherModel mainModel = response.body();
                 view.updateView(mainModel);
             } else {

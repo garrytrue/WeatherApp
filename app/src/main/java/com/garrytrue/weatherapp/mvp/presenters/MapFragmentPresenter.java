@@ -36,7 +36,7 @@ public class MapFragmentPresenter implements IMapFragmentPresenter, GoogleApiCli
     @Override
     public void onActivityCreated() {
         if (mLocationClient == null)
-            startLocationService();
+            buildLocationService();
     }
 
 
@@ -58,10 +58,8 @@ public class MapFragmentPresenter implements IMapFragmentPresenter, GoogleApiCli
         Location mLocation = LocationServices.FusedLocationApi.getLastLocation(mLocationClient);
 
         if (mLocation != null) {
-            double latitude = mLocation.getLatitude();
-            double longitude = mLocation.getLongitude();
-            Log.d(TAG, "onConnected: LAT" + latitude + " Lon " + longitude);
-            LatLng location = new LatLng(latitude, longitude);
+            Log.d(TAG, "onConnected: Location " + mLocation);
+            LatLng location = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
             view.showLocation(location);
         } else {
             Log.d(TAG, "onConnected: Location is NULL");
@@ -83,7 +81,7 @@ public class MapFragmentPresenter implements IMapFragmentPresenter, GoogleApiCli
         view.showConnectionFailedError(connectionResult);
     }
 
-    private synchronized void startLocationService() {
+    private synchronized void buildLocationService() {
         mLocationClient = new GoogleApiClient.Builder(WeatherApplication.getContextApplication())
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -94,7 +92,7 @@ public class MapFragmentPresenter implements IMapFragmentPresenter, GoogleApiCli
     //LocationCallback
     @Override
     public void onLocationChanged(Location location) {
-        Log.d(TAG, "onLocationChanged: " + location.toString());
+        Log.d(TAG, "onLocationChanged: " + location);
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         view.showLocation(latLng);
         LocationServices.FusedLocationApi.removeLocationUpdates(mLocationClient, this);

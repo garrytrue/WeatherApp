@@ -18,7 +18,7 @@ public class MainActivityPresenter implements IMainActivityPresenter {
     }
 
     @Override
-    public void hadGoogleServiceError() {
+    public void haveGoogleServiceError() {
         mainView.showGoogleServiceError();
     }
 

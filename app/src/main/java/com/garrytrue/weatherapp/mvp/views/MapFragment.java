@@ -18,12 +18,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import javax.inject.Inject;
 
-/**
- * Created by TorbaIgor (garrytrue@yandex.ru) on 23.11.15.
- */
+
 public class MapFragment extends SupportMapFragment implements OnMapReadyCallback, IMapFragmentView {
     private static final String TAG = "MapFragment";
-    public static final int MAP_ZOOM = 10;
+    private static final int MAP_ZOOM = 10;
     private GoogleMap mMap;
     private LatLng mLocation;
     private View rootView;

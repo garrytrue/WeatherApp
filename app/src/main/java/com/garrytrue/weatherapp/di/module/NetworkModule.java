@@ -19,7 +19,7 @@ import retrofit.Retrofit;
 
 @Module
 public class NetworkModule {
-    public static final int HTTP_CACHE = 10*1024*1024;
+    private static final int HTTP_CACHE = 10*1024*1024;
     Application application;
 
 

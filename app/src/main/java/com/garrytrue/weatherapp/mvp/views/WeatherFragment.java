@@ -12,9 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.garrytrue.weatherapp.R;
-import com.garrytrue.weatherapp.weather_app.WeatherApplication;
 import com.garrytrue.weatherapp.mvp.model.WeatherModel;
 import com.garrytrue.weatherapp.mvp.presenters.WeatherFragmentPresenter;
+import com.garrytrue.weatherapp.weather_app.WeatherApplication;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -171,16 +171,19 @@ public class WeatherFragment extends Fragment implements IWeatherFragmentView {
 
     }
 
+    @SuppressWarnings(value = "all")
     private void showInfoViews(boolean needShow) {
-        commonInfo.setVisibility(needShow ? View.VISIBLE : View.GONE);
-        fullInfo.setVisibility(needShow ? View.VISIBLE : View.GONE);
-        weatherImage.setVisibility(needShow ? View.VISIBLE : View.GONE);
-        progressBar.setVisibility(!needShow ? View.VISIBLE : View.GONE);
+        commonInfo.setVisibility(getVisibility(needShow));
+        fullInfo.setVisibility(getVisibility(needShow));
+        weatherImage.setVisibility(getVisibility(needShow));
+        progressBar.setVisibility(getVisibility(!needShow));
+    }
+
+    private int getVisibility(boolean needShow) {
+        return needShow ? View.VISIBLE : View.GONE;
     }
 
     private String dateTimeConverter(long timestamp) {
-        long dv = Long.valueOf(timestamp) * 1000;// its need to be in milisecond
-        Date df = new java.util.Date(dv);
-        return new SimpleDateFormat("MMM dd, yy HH:mm", Locale.getDefault()).format(df);
+        return new SimpleDateFormat("MMM dd, yy HH:mm", Locale.getDefault()).format(new Date(timestamp * 1000));
     }
 }

@@ -10,8 +10,8 @@ import dagger.Provides;
 
 @Module
 public class LocationRequestModule {
-    public static final int REQUEST_LOCATION_INTERVAL = 10*1000; //10 sec
-    public static final int REQUEST_LOCATION_FASTEST_INTERVAL = 5*1000; // 5sec
+    private static final int REQUEST_LOCATION_INTERVAL = 10_000; //10 sec
+    private static final int REQUEST_LOCATION_FASTEST_INTERVAL = 5_000; // 5sec
     @Singleton
     @Provides
     LocationRequest provideLocationRequest() {
